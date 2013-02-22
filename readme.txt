@@ -26,13 +26,21 @@ This plugin is still in beta and so I'd appreciate your help in testing it.
 Currently implemented:
 
 *   Names of fields are randomized every night at 12:00,
-*   Submissions to the standard WordPress field names are automatically deleted.
+*   Submissions to the standard WordPress field names are automatically deleted,
+*   Honeypot fields added to comments form.
 
 Planned:
 
+*   WooCommerce support,
 *   Statistical collection,
 *   Automated blocking of persistent IPs,
 *   Opt-in centralized collection of comment spam and statistics for additional research.
+
+**Please note:** Squelch Unspam is not currently compatible with WooCommerce. WooCommerce's product reviews system piggybacks WordPress's
+comments system but does not provide a filter hook for plugin writers to latch onto making it impossible to modify their reviews form
+without modifying WooCommerce of the active theme. In the future Unspam will support WooCommerce with
+some manual modifications to your site's theme and instructions will be provided on how to do this. In the meantime, if you use WooCommerce
+and have reviews enabled on your products, please do NOT use Unspam.
 
 == Installation ==
 
@@ -57,11 +65,6 @@ Currently there is no configuration on this plugin.
 
 == Frequently Asked Questions ==
 
-= What does "Field names will automatically update next time a post/page with comments enabled is viewed" mean? =
-
-The field names on the comment form randomize every night at midnight. This randomization takes place automatically the next time after
-12:00 that somebody views a page that has a comments form enabled on it. If nobody visits such a page the message will remain.
-
 = How do I configure the plugin? =
 
 There is currently no configuration available on this plugin, just install it and activate it and it will start protecting your blog.
@@ -83,10 +86,17 @@ I expect to put in a feature to prevent even this from occurring in the near fut
 
 == Changelog ==
 
+= 1.0.1 =
+* Removed the 'Field names will automatically update next time a post/page with comments enabled is viewed' message by default, can be re-enabled by appending ?unspam-rmvmsg=ignorewoocommerce to the page URL (in admin).
+* Added "Remove this message" options to messages generated in admin.
+
 = 1.0 =
 * Initial version
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+1.0.1 provides tweaks to the admin interface to make Unspam less intrusive and provides checks for WooCommerce, which it is not currently compatible with.
 
 = 1.0 =
 Initial version
