@@ -3,7 +3,7 @@
 Plugin Name: Squelch WordPress Unspam
 Plugin URI: http://squelchdesign.com/wordpress-plugin-squelch-unspam/
 Description: Stops spam at the root by renaming the fields on the comment forms
-Version: 1.0
+Version: 1.1
 Author: Matt Lowe
 Author URI: http://squelchdesign.com/matt-lowe
 License: GPL2
@@ -39,7 +39,7 @@ function lstunspam_activate() {
     update_option( 'lstunspam_last_change', lstunspam_get_day() - 1 );
 
     // Show welcme message
-    update_option( 'lstunspam_showmessage', 3 );
+    update_option( 'lstunspam_showmessage', 2 );
 }
 register_activation_hook( __FILE__, 'lstunspam_activate' );
 
@@ -48,6 +48,14 @@ register_activation_hook( __FILE__, 'lstunspam_activate' );
  * Displays the welcome message.
  */
 function lstunspam_welcome_message() {
+    // Message hiding/showing etc
+    $rmvmsg = $_GET['unspam-rmvmsg'];
+    if (!empty($rmvmsg)) {
+        if ($rmvmsg == 'ignorewoocommerce')         update_option('lstunspam_ignorewoocommerce', 1);
+        if ($rmvmsg == 'showfieldupdatemessage')    update_option('lstunspam_showfieldupdatemessage', 1);
+        if ($rmvmsg == 'hidefieldupdatemessage')    update_option('lstunspam_showfieldupdatemessage', 0);
+    }
+
     if ( get_option( 'lstunspam_showmessage' ) > 0 ) {
         update_option( 'lstunspam_showmessage', get_option( 'lstunspam_showmessage' ) - 1 );
 
@@ -55,19 +63,31 @@ function lstunspam_welcome_message() {
         $msg = '<div class="updated">'
             .'<p style="font-size: 1.3em;">'
             ."Thank you for installing "
-            .'<strong style="color: blue;">'
+            .'<strong style="color: #2279a0;">'
             ."Squelch WordPress Unspam</strong>. "
             ."There's nothing to configure, the plugin just does its thing in the "
             ."background, so you can get on with running your website. Enjoy!"
-            .'</p></div>';
+            .'</p><p>This message will disappear automatically.</p></div>';
         echo $msg;
     }
 
-    if (lstunspam_field_names_update_needed()) {
+    if (get_option('lstunspam_showfieldupdatemessage') > 0 && lstunspam_field_names_update_needed()) {
         $msg = '<div class="updated">'
             .'<p><strong>Squelch WordPress Unspam:</strong> Field names will '
             .'automatically update next time a post/page with comments enabled '
-            .'is viewed.</p></div>';
+            .'is viewed. '
+            .'<a href="'.lstunspam_get_dashboard_url().'?unspam-rmvmsg=hidefieldupdatemessage">Remove this message.</a></p></div>';
+        echo $msg;
+    }
+
+    if ( class_exists( 'Woocommerce' ) && !(get_option('lstunspam_ignorewoocommerce') > 0)) {
+        $msg = '<div class="error">'
+            .'<p><strong>Squelch WordPress Unspam:</strong> Unspam has detected the '
+            .'presence of WooCommerce on your WordPress installation. Unspam is not currently '
+            ."compatible with WooCommerce's reviews mechanism, if you have reviews enabled on your "
+            .'products then please do NOT use Unspam. '
+            .'<a href="'.lstunspam_get_dashboard_url().'?unspam-rmvmsg=ignorewoocommerce">Remove this message</a>'
+            .'</p></div>';
         echo $msg;
     }
 }
@@ -296,6 +316,15 @@ function lstunspam_get_day() {
 }
 
 
+/**
+ * Returns the URL of the dashboard, for creating links in messages.
+ */
+function lstunspam_get_dashboard_url() {
+    $scheme = $atts['scheme'];
+    return get_site_url( null, '', $scheme ).'/wp-admin/index.php';
+}
+
+
 
 /* =Deactivation
 ---------------------------------------------------------------------------- */
@@ -305,12 +334,13 @@ function lstunspam_get_day() {
  */
 function lstunspam_deactivate() {
     // On deactivation of the plugin we clean up our stored options.
-    delete_option( 'lstunspam_field1name'     );
-    delete_option( 'lstunspam_field2name'     );
-    delete_option( 'lstunspam_last_change'    );
-    delete_option( 'lstunspam_showmessage'    );
-    delete_option( 'lstunspam_fieldsMap'      );
-    delete_option( 'lstunspam_default_fields' );
+    delete_option( 'lstunspam_field1name'           );
+    delete_option( 'lstunspam_field2name'           );
+    delete_option( 'lstunspam_last_change'          );
+    delete_option( 'lstunspam_showmessage'          );
+    delete_option( 'lstunspam_fieldsMap'            );
+    delete_option( 'lstunspam_default_fields'       );
+    delete_option( 'lstunspam_ignorewoocommerce'    );
 }
 register_deactivation_hook( __FILE__, 'lstunspam_deactivate' );
 
