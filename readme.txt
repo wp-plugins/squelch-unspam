@@ -38,7 +38,7 @@ Planned:
 
 **Please note:** Squelch Unspam is not currently compatible with WooCommerce. WooCommerce's product reviews system piggybacks WordPress's
 comments system but does not provide a filter hook for plugin writers to latch onto making it impossible to modify their reviews form
-without modifying WooCommerce of the active theme. In the future Unspam will support WooCommerce with
+without modifying WooCommerce or the active theme. In the future Unspam will support WooCommerce with
 some manual modifications to your site's theme and instructions will be provided on how to do this. In the meantime, if you use WooCommerce
 and have reviews enabled on your products, please do NOT use Unspam.
 
