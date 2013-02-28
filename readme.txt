@@ -86,6 +86,9 @@ I expect to put in a feature to prevent even this from occurring in the near fut
 
 == Changelog ==
 
+= 1.1 =
+* Fix for plugin interfering with 404 Redirected plugin (and potentially other plugins) in the admin interface
+
 = 1.0.1 =
 * Removed the 'Field names will automatically update next time a post/page with comments enabled is viewed' message by default, can be re-enabled by appending ?unspam-rmvmsg=ignorewoocommerce to the page URL (in admin).
 * Added "Remove this message" options to messages generated in admin.
@@ -94,6 +97,9 @@ I expect to put in a feature to prevent even this from occurring in the near fut
 * Initial version
 
 == Upgrade Notice ==
+
+= 1.1 =
+1.1 provides bug-fixes to prevent Unspam interfering with other plugins you may be using that share field names with the comment form.
 
 = 1.0.1 =
 1.0.1 provides tweaks to the admin interface to make Unspam less intrusive and provides checks for WooCommerce, which it is not currently compatible with.

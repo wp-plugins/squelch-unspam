@@ -3,7 +3,7 @@
 Plugin Name: Squelch WordPress Unspam
 Plugin URI: http://squelchdesign.com/wordpress-plugin-squelch-unspam/
 Description: Stops spam at the root by renaming the fields on the comment forms
-Version: 1.0.1
+Version: 1.1
 Author: Matt Lowe
 Author URI: http://squelchdesign.com/matt-lowe
 License: GPL2
@@ -102,16 +102,21 @@ add_action( 'admin_notices', 'lstunspam_welcome_message' );
 $fieldsMap = get_option( 'lstunspam_fieldsMap', array() );
 
 if (isset( $fieldsMap )) {
-    foreach (array_keys( $fieldsMap ) as $field) {
-        // Look for data being submitted blindly to the original field names, which
-        // would suggest an automated spambot assuming that all WordPress blogs
-        // have identical field names
-        if ( isset( $_POST[$field] ) ) lstunspam_spam();
+    // Only prevent access to original fields if an attempt has been made to post a comment
+    // (ie do not interfere with other forms that have the same field names)
+    if (!empty($_POST['comment_post_ID'])) {
 
-        // If form has been submitted using the new name then move the value over
-        // to the correct field name for further processing by WP
-        if ( isset( $_POST[$fieldsMap[$field]] ) ) {
-            $_POST[$field] = $_POST[$fieldsMap[$field]];
+        foreach (array_keys( $fieldsMap ) as $field) {
+            // Look for data being submitted blindly to the original field names, which
+            // would suggest an automated spambot assuming that all WordPress blogs
+            // have identical field names
+            if ( isset( $_POST[$field] ) ) lstunspam_spam();
+
+            // If form has been submitted using the new name then move the value over
+            // to the correct field name for further processing by WP
+            if ( isset( $_POST[$fieldsMap[$field]] ) ) {
+                $_POST[$field] = $_POST[$fieldsMap[$field]];
+            }
         }
     }
 }
