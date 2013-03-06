@@ -200,19 +200,29 @@ function lstunspam_update_field_names() {
  * are stored internally and posts that refer to these directly will be treated
  * as spam. New names will be generated for these fields and used in their
  * place to allow legitimate commenters to submit comments.
+ *
+ * As of 1.1 this function also sets up lstunspam_rename_field to rename each
+ * field in turn as it is being output to the page. The change is made in this
+ * way to allow support for woocommerce.
  */
 function lstunspam_get_field_names( $fields ) {
-    $found = array_keys( $fields );
+    $found = get_option( 'lstunspam_default_fields', array() );
+    $found = array_merge(array_keys( $fields ), $found);
     array_push( $found, "comment" );
+    $found = array_unique($found);
+
     update_option( 'lstunspam_default_fields', $found );
+
+    foreach ( $found as $field ) {
+        add_filter( "comment_form_field_{$field}", 'lstunspam_rename_field', 1, 20 );
+    }
 
     return $fields;
 }
-add_filter( 'comment_form_default_fields', 'lstunspam_get_field_names', 1, 11);
 
 
 /**
- * Add to new fields to the comment form. One that must remain empty, one that
+ * Add two new fields to the comment form. One that must remain empty, one that
  * must contain the address of the website. These two extra fields will be
  * submitted along with the comment and tested. Spam bots will not know whether
  * to fill out the 
@@ -235,44 +245,67 @@ function lstunspam_add_hidden_fields( $fields ) {
 
     return $fields;
 }
-add_filter('comment_form_default_fields', 'lstunspam_add_hidden_fields', 1, 12);
 
 
 /**
  * Rename all fields in the generated form to use the newly chosen values.
  */
-function lstunspam_rename_fields( $fields ) {
+function lstunspam_rename_field( $val ) {
+
     $fieldsMap = get_option( 'lstunspam_fieldsMap' );
 
-    foreach ( array_keys($fields) as $field ) {
-        $val = $fields[$field];
+    // Name of field we are acting on isn't passed through, so have to calculate it from filter name
+    // *sigh*
+    $field = current_filter();
+    $field = preg_replace( '/^comment_form_field_/', '', $field );
 
-        if ( is_string( $val ) ) {
-            $val = preg_replace( '/id="'  .$field.'"/', 'id="'  .$fieldsMap[$field].'"', $val );
-            $val = preg_replace( '/name="'.$field.'"/', 'name="'.$fieldsMap[$field].'"', $val );
-            $val = preg_replace( '/for="' .$field.'"/', 'for="' .$fieldsMap[$field].'"', $val );
+    $newField = $fieldsMap[$field];
 
-            $fields[$field] = $val;
-        }
+    if ( is_string( $val ) ) {
+        $val = preg_replace( '/id="'  .$field.'"/', 'id="'  .$newField.'"', $val );
+        $val = preg_replace( '/name="'.$field.'"/', 'name="'.$newField.'"', $val );
+        $val = preg_replace( '/for="' .$field.'"/', 'for="' .$newField.'"', $val );
+
+        $fields[$field] = $val;
     }
 
-    return $fields;
+    return $val;
 }
-add_filter( 'comment_form_default_fields', 'lstunspam_rename_fields', 1, 13 );
+
+
+///**
+// * Rename all fields in the generated form to use the newly chosen values.
+// */
+//function lstunspam_rename_fields( $fields ) {
+//    $fieldsMap = get_option( 'lstunspam_fieldsMap' );
+//
+//    foreach ( array_keys($fields) as $field ) {
+//        $val = $fields[$field];
+//
+//        if ( is_string( $val ) ) {
+//            $val = preg_replace( '/id="'  .$field.'"/', 'id="'  .$fieldsMap[$field].'"', $val );
+//            $val = preg_replace( '/name="'.$field.'"/', 'name="'.$fieldsMap[$field].'"', $val );
+//            $val = preg_replace( '/for="' .$field.'"/', 'for="' .$fieldsMap[$field].'"', $val );
+//
+//            $fields[$field] = $val;
+//        }
+//    }
+//
+//    return $fields;
+//}
 
 
 /**
  * Renames "comment" field.
  */
 function lstunspam_rename_comment_field( $fields ) {
+
+    $fields['fields'] = lstunspam_get_field_names(   $fields['fields'] );
+    $fields['fields'] = lstunspam_add_hidden_fields( $fields['fields'] );
+    //$fields['fields'] = lstunspam_rename_fields(     $fields['fields'] );
+
     $fieldsMap = get_option( 'lstunspam_fieldsMap' );
     $val = $fields['comment_field'];
-
-    $val = preg_replace( '/id="'  .'comment'.'"/', 'id="'  .$fieldsMap['comment'].'"', $val );
-    $val = preg_replace( '/name="'.'comment'.'"/', 'name="'.$fieldsMap['comment'].'"', $val );
-    $val = preg_replace( '/for="' .'comment'.'"/', 'for="' .$fieldsMap['comment'].'"', $val );
-
-    $fields['comment_field'] = $val;
 
     return $fields;
 }

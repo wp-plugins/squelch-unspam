@@ -27,11 +27,11 @@ Currently implemented:
 
 *   Names of fields are randomized every night at 12:00,
 *   Submissions to the standard WordPress field names are automatically deleted,
-*   Honeypot fields added to comments form.
+*   Honeypot fields added to comments form,
+*   WooCommerce support.
 
 Planned:
 
-*   WooCommerce support,
 *   Statistical collection,
 *   Automated blocking of persistent IPs,
 *   Opt-in centralized collection of comment spam and statistics for additional research.
@@ -75,6 +75,10 @@ visitors' browsers.
 
 No. This plugin does not require JavaScript to be enabled, nor does it use CAPTCHAs.
 
+= Don't my users have to do something to prove they're human? =
+
+Nope.
+
 = What about false positives? =
 
 This plugin is special in that false positives should never really occur with the exception of the small possibility that a human
@@ -82,6 +86,9 @@ visitor might open a page just before midnight then submit a comment just after 
 I expect to put in a feature to prevent even this from occurring in the near future.
 
 == Changelog ==
+
+= 1.2 =
+* Added in WooCommerce support.
 
 = 1.1 =
 * Fix for plugin interfering with 404 Redirected plugin (and potentially other plugins) in the admin interface
@@ -94,6 +101,9 @@ I expect to put in a feature to prevent even this from occurring in the near fut
 * Initial version
 
 == Upgrade Notice ==
+
+= 1.2 =
+This release was intended for 1.1, but 1.1 went live prematurely due to an error in the repository. 1.1 fixed a bug with Unspam interfering with forms other than the new comment form, 1.2 adds in support for WooCommerce.
 
 = 1.1 =
 1.1 provides bug-fixes to prevent Unspam interfering with other plugins you may be using that share field names with the comment form.
