@@ -4,7 +4,7 @@ Donate link: http://squelchdesign.com/wordpress-plugin-squelch-unspam/
 Tags: comments, spam, filter, spam filter, comment spam filter, stop spam, prevent spam, reduce spam, prevent automated spam, no captcha anti-spam, anti-spam
 Requires at least: 2.0
 Tested up to: 3.5.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Unspam makes it harder for spammers to automatedly send spam to your blog by cha
 == Description ==
 
 Unspam by Squelch Design is the simplest plugin you can find for **reducing your comment spam** problem. Once installed there's nothing
-to configure, and nothing changes to your visitors: No captcha or silly games, they don't need JavaScript enabled. Once installed
+to configure, and nothing changes to your visitors: No captcha or silly games, they don't even need JavaScript enabled. Once installed
 the plugin will simply randomize the names of the fields in the comments form on your blog and reject comments that are sent to the
 standard WordPress field names.
 
@@ -35,9 +35,6 @@ Planned:
 *   Statistical collection,
 *   Automated blocking of persistent IPs,
 *   Opt-in centralized collection of comment spam and statistics for additional research.
-
-**Please note:** Squelch Unspam is not currently compatible with WooCommerce. WooCommerce's product reviews system piggybacks WordPress's
-comments system but Unspam does not currently rename its fields correctly. This is scheduled for Unspam 1.2.
 
 == Installation ==
 
