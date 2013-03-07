@@ -3,7 +3,7 @@
 Plugin Name: Squelch WordPress Unspam
 Plugin URI: http://squelchdesign.com/wordpress-plugin-squelch-unspam/
 Description: Stops spam at the root by renaming the fields on the comment forms
-Version: 1.1
+Version: 1.2
 Author: Matt Lowe
 Author URI: http://squelchdesign.com/matt-lowe
 License: GPL2
