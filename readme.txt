@@ -84,6 +84,9 @@ I expect to put in a feature to prevent even this from occurring in the near fut
 
 == Changelog ==
 
+= 1.2.1 =
+* Removed the 'WooCommerce not supported' message
+
 = 1.2 =
 * Added in WooCommerce support.
 
@@ -98,6 +101,9 @@ I expect to put in a feature to prevent even this from occurring in the near fut
 * Initial version
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Minor update to 1.2 to remove the 'WooCommerce not supported' message.
 
 = 1.2 =
 This release was intended for 1.1, but 1.1 went live prematurely due to an error in the repository. 1.1 fixed a bug with Unspam interfering with forms other than the new comment form, 1.2 adds in support for WooCommerce.
