@@ -3,7 +3,7 @@
 Plugin Name: Squelch WordPress Unspam
 Plugin URI: http://squelchdesign.com/wordpress-plugin-squelch-unspam/
 Description: Stops spam at the root by renaming the fields on the comment forms
-Version: 1.2
+Version: 1.2.1
 Author: Matt Lowe
 Author URI: http://squelchdesign.com/matt-lowe
 License: GPL2
@@ -51,7 +51,6 @@ function lstunspam_welcome_message() {
     // Message hiding/showing etc
     $rmvmsg = $_GET['unspam-rmvmsg'];
     if (!empty($rmvmsg)) {
-        if ($rmvmsg == 'ignorewoocommerce')         update_option('lstunspam_ignorewoocommerce', 1);
         if ($rmvmsg == 'showfieldupdatemessage')    update_option('lstunspam_showfieldupdatemessage', 1);
         if ($rmvmsg == 'hidefieldupdatemessage')    update_option('lstunspam_showfieldupdatemessage', 0);
     }
@@ -77,17 +76,6 @@ function lstunspam_welcome_message() {
             .'automatically update next time a post/page with comments enabled '
             .'is viewed. '
             .'<a href="'.lstunspam_get_dashboard_url().'?unspam-rmvmsg=hidefieldupdatemessage">Remove this message.</a></p></div>';
-        echo $msg;
-    }
-
-    if ( class_exists( 'Woocommerce' ) && !(get_option('lstunspam_ignorewoocommerce') > 0)) {
-        $msg = '<div class="error">'
-            .'<p><strong>Squelch WordPress Unspam:</strong> Unspam has detected the '
-            .'presence of WooCommerce on your WordPress installation. Unspam is not currently '
-            ."compatible with WooCommerce's reviews mechanism, if you have reviews enabled on your "
-            .'products then please do NOT use Unspam. '
-            .'<a href="'.lstunspam_get_dashboard_url().'?unspam-rmvmsg=ignorewoocommerce">Remove this message</a>'
-            .'</p></div>';
         echo $msg;
     }
 }
@@ -201,7 +189,7 @@ function lstunspam_update_field_names() {
  * as spam. New names will be generated for these fields and used in their
  * place to allow legitimate commenters to submit comments.
  *
- * As of 1.1 this function also sets up lstunspam_rename_field to rename each
+ * As of 1.2 this function also sets up lstunspam_rename_field to rename each
  * field in turn as it is being output to the page. The change is made in this
  * way to allow support for woocommerce.
  */
