@@ -3,7 +3,7 @@
 Plugin Name: Squelch WordPress Unspam
 Plugin URI: http://squelchdesign.com/wordpress-plugin-squelch-unspam/
 Description: Stops spam at the root by renaming the fields on the comment forms
-Version: 1.2.1
+Version: 1.2.2
 Author: Matt Lowe
 Author URI: http://squelchdesign.com/matt-lowe
 License: GPL2
@@ -49,7 +49,9 @@ register_activation_hook( __FILE__, 'lstunspam_activate' );
  */
 function lstunspam_welcome_message() {
     // Message hiding/showing etc
-    $rmvmsg = $_GET['unspam-rmvmsg'];
+    $rmvmsg = '';
+    if (!empty($_GET['unspam-rmvmsg'])) $rmvmsg = $_GET['unspam-rmvmsg'];
+
     if (!empty($rmvmsg)) {
         if ($rmvmsg == 'showfieldupdatemessage')    update_option('lstunspam_showfieldupdatemessage', 1);
         if ($rmvmsg == 'hidefieldupdatemessage')    update_option('lstunspam_showfieldupdatemessage', 0);
@@ -122,7 +124,7 @@ function lstunspam_init() {
     $field2name = get_option( 'lstunspam_field2name' );
 
     // Field 1 must be left empty
-    if ($_POST[$field1name] != "") lstunspam_spam();
+    if (!empty($_POST[$field1name])) lstunspam_spam();
     // Field 2 must have the URL of the website in it
     if (!empty($_POST[$field2name])) {
         if ($_POST[$field2name] != get_bloginfo("wpurl")) lstunspam_spam();
