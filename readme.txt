@@ -4,7 +4,7 @@ Donate link: http://squelchdesign.com/wordpress-plugin-squelch-unspam/
 Tags: comments, spam, filter, spam filter, comment spam filter, stop spam, prevent spam, reduce spam, prevent automated spam, no captcha anti-spam, anti-spam
 Requires at least: 2.0
 Tested up to: 3.5.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
