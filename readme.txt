@@ -3,7 +3,7 @@ Contributors: squelch
 Donate link: http://squelchdesign.com/wordpress-plugin-squelch-unspam/
 Tags: comments, spam, filter, spam filter, comment spam filter, stop spam, prevent spam, reduce spam, prevent automated spam, no captcha anti-spam, anti-spam
 Requires at least: 2.0
-Tested up to: 3.5.1
+Tested up to: 4.0.1
 Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,15 +13,13 @@ Unspam makes it harder for spammers to automatedly send spam to your blog by cha
 == Description ==
 
 Unspam by Squelch Design is the simplest plugin you can find for **reducing your comment spam** problem. Once installed there's nothing
-to configure, and nothing changes to your visitors: No captcha or silly games, they don't even need JavaScript enabled. Once installed
+to configure, and nothing changes to your visitors: No captcha or silly games. Once installed
 the plugin will simply randomize the names of the fields in the comments form on your blog and reject comments that are sent to the
-standard WordPress field names.
+standard WordPress field names, or where bots have blindly submitted data to the honeypot fields.
 
 What this means for spammers is that they have to do quite a lot more work to send spam to your website. It may also make sending
 spam to your website unreliable as changes to your theme may upset their spam submission tools. Or they may have to resort to using
 humans to send spam to your website (not much I can do about that I'm afraid) which will cost them more money.
-
-This plugin is still in beta and so I'd appreciate your help in testing it.
 
 Currently implemented:
 
@@ -30,7 +28,7 @@ Currently implemented:
 *   Honeypot fields added to comments form,
 *   WooCommerce support.
 
-Planned:
+Additional (planned) features:
 
 *   Statistical collection,
 *   Automated blocking of persistent IPs,
@@ -70,19 +68,26 @@ visitors' browsers.
 
 = Does this plugin require JavaScript to be enabled on my visitors' browsers? =
 
-No. This plugin does not require JavaScript to be enabled, nor does it use CAPTCHAs.
+As of version 1.3, yes. This plugin will require JavaScript to be enabled by your users as an additional safeguard against spam.
 
 = Don't my users have to do something to prove they're human? =
 
-Nope.
+Nope, spammers just have to prove that they're NOT human. We give the spammers enough rope to hang themselves with.
 
 = What about false positives? =
 
-This plugin is special in that false positives should never really occur with the exception of the small possibility that a human
-visitor might open a page just before midnight then submit a comment just after midnight. Their comment would be rejected as spam.
-I expect to put in a feature to prevent even this from occurring in the near future.
+With the exception of a few rare scenarios and users without JavaScript enabled, there shouldn't be any false positives.
 
 == Changelog ==
+
+= 1.3 =
+* Fixed a minor bug that could be exploited to circumvent some of the protection that was in place.
+* Added two new honeypot fields to the form.
+* Changed the naming scheme for randomized fields to make them legitimate page IDs.
+* Added in a JavaScript check (very few spammers will execute JavaScript).
+* Modified the hiding of the fields to use inline CSS instead of embedded styles to make it harder to detect honeypots.
+* Enhancements to give WooCommerce reviews the same protection as comment forms.
+* Created two external dependencies without which the comment form will not work in an attempt to catch out manual spammers.
 
 = 1.2.1 =
 * Removed the 'WooCommerce not supported' message
@@ -101,6 +106,9 @@ I expect to put in a feature to prevent even this from occurring in the near fut
 * Initial version
 
 == Upgrade Notice ==
+
+= 1.3 =
+Bug-fixes and enhancements to improve spam filtering, since some spammers are starting to get wise to this plugin. Note that your users WILL have to have JavaScript enabled in order to post comments from version 1.3 on.
 
 = 1.2.1 =
 Minor update to 1.2 to remove the 'WooCommerce not supported' message.
