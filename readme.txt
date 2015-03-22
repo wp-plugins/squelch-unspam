@@ -12,7 +12,7 @@ Unspam makes it harder for spammers to automatedly send spam to your blog by cha
 
 == Description ==
 
-Unspam by Squelch Design is the simplest plugin you can find for **reducing your comment spam** problem. Once installed there's nothing
+Unspam by Squelch Design is the simplest [WordPress anti-spam plugin](http://squelchdesign.com/wordpress-plugin-squelch-unspam/) you can find for **reducing your comment spam** problem. Once installed there's nothing
 to configure, and nothing changes to your visitors: No captcha or silly games. Once installed
 the plugin will simply randomize the names of the fields in the comments form on your blog and reject comments that are sent to the
 standard WordPress field names, or where bots have blindly submitted data to the honeypot fields.
@@ -30,6 +30,7 @@ Currently implemented:
 
 Additional (planned) features:
 
+*   Contact Form 7 integration
 *   Statistical collection,
 *   Automated blocking of persistent IPs,
 *   Opt-in centralized collection of comment spam and statistics for additional research.
