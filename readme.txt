@@ -64,8 +64,8 @@ There is currently no configuration available on this plugin, just install it an
 
 = Does this plugin require my readers to fill out a CAPTCHA? =
 
-No. I hate CAPCTHAs as much as the next person, this plugin does not use them nor does it require JavaScript to be enabled on your
-visitors' browsers.
+No. I hate CAPCTHAs as much as the next person, this plugin does not use them. Future versions might include the option to enable
+a CAPTCHA if you really want one.
 
 = Does this plugin require JavaScript to be enabled on my visitors' browsers? =
 
